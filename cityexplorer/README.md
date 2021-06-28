@@ -1,7 +1,22 @@
-# Getting Started with Create React App
+## Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# City Explorer
 
+**Author**: Thaer Braizat
+**Version**: 1.0.0 
+
+## Overview
+This is an application that allow the user to enter any location's name (city, country , village,...), to get the map of this entered location, the longitude and latitude
+
+## Getting Started
+Enter the name of the city or region you want to display the map for, and then click on Explore.
+
+## Architecture
+This is build as a react js application, using axios library.
+
+## Change Log
+
+13th June 2021, lab06 (rendering the map).
 ## Available Scripts
 
 In the project directory, you can run:
