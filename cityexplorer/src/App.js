@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ListGroup } from 'react-bootstrap';
-import MapContaine from './MapContaine';
+import { ListGroup,Image  } from 'react-bootstrap';
+// import MapContaine from './MapContaine';
 export class App extends Component {
 
   constructor(props) {
@@ -10,7 +10,8 @@ export class App extends Component {
     this.state = {
       displayName: '',
       longitude: '',
-      latitude: ''
+      latitude: '',
+      display: false
     }
   }
 
@@ -26,7 +27,8 @@ export class App extends Component {
       this.setState({
         displayName: axiosResponse.data[0].display_name,
         longitude: axiosResponse.data[0].lon,
-        latitude: axiosResponse.data[0].lat
+        latitude: axiosResponse.data[0].lat,
+        display : true
       })
     }).catch(e=>{
       alert("plz enter city name!")
@@ -47,9 +49,10 @@ export class App extends Component {
           <ListGroup.Item variant="dark" style={{height: '4em'}}>{this.state.longitude}</ListGroup.Item>
           <ListGroup.Item variant="dark" style={{height: '4em'}}>{this.state.latitude}</ListGroup.Item>
         </ListGroup>
-      
-        
-        <MapContaine  lat={this.state.latitude} lon={this.state.longitude} />
+        {this.state.display &&
+        <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.aa7e1497cc88fec3b69a5efd60a76506&center=${this.state.latitude},${this.state.longitude}&zoom=10`} style={{ width:"400px" , height:"400" }} rounded/>
+         /* <MapContaine  lat={this.state.latitude} lon={this.state.longitude} /> */
+        }
       </>
      
      
