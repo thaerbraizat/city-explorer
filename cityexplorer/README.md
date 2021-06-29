@@ -14,10 +14,9 @@ Enter the name of the city or region you want to display the map for, and then c
 ## Architecture
 This is build as a react js application, using axios library.
 
-# Getting Started with Create React App
+## Change Log
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+13th June 2021, lab06 (rendering the map).
 ## Available Scripts
 
 In the project directory, you can run:
