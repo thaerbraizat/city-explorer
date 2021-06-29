@@ -31,7 +31,8 @@ export class App extends Component {
         display : true
       })
     }).catch(e=>{
-      alert("plz enter city name!")
+      alert("plz enter city name! 404 ERORR");
+  
     })
   
     
