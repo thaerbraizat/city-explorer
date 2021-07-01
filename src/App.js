@@ -13,12 +13,14 @@ export class App extends Component {
       latitude: '',
       display: false,
       weather: [],
-      movies: []
+      movies: [],
+      cityName: ''
     }
   }
 
   nameChangeHandler = (e) => {
     this.setState({
+      cityName: e.target.value,
       displayName: e.target.value
     })
   }
@@ -40,26 +42,29 @@ export class App extends Component {
           display: true
         })
       })
-      let moviesUrl = `http://localhost:8000/movies?cityname=${this.state.display}`
+      let moviesUrl = `http://localhost:8000/movies?&originaltitle=${this.state.cityName}`
       let moviesGet = await axios.get(moviesUrl).then(response => {
         this.setState({
           movies: response.data,
+
           display: true
         })
       })
 
     })
-    //   .catch{
-    //   this.setState({
-    //     display: false
-    //   })
-    //   alert("plz enter city name! 404 ERORR");
-    // }
+    .catch(error => {
+      this.setState({
+        display:false
+      })
+      alert("plz enter city name! 500 ERORR");
+    });
+    
 
 
 
   }
   render() {
+    console.log(this.state.cityName);
     return (
       <>
         <form onSubmit={this.submitData}>
@@ -81,8 +86,12 @@ export class App extends Component {
           this.state.weather.map((element, i) => {
             return (
               <>
-                <h3> Description: {element.description}</h3>
-                <h3> date : {element.date}</h3>
+                < ListGroup>
+
+                  <ListGroup.Item variant="primary" className="text-center"  style={{ height: '4em'}}>Description: {element.description}</ListGroup.Item>
+                  <ListGroup.Item variant="danger" className="text-center" style={{ height: '4em' }}> date : {element.date}</ListGroup.Item>
+                </ListGroup>
+
               </>
             )
 
@@ -92,13 +101,17 @@ export class App extends Component {
         {
           this.state.display &&
           this.state.movies.map((element, i) => {
+            console.log(element);
             return (
+
               <>
+              
                 <h4>Title :{element.title}</h4>
                 <h5>Have Votes :{element.votes}</h5>
-                <img src={element.img} />
+                <img src={element.img}  />
               </>
             )
+            
           })
         }
       </>
