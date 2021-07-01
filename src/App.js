@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ListGroup,Image  } from 'react-bootstrap';
+import { ListGroup, Image } from 'react-bootstrap';
 // import MapContaine from './MapContaine';
 export class App extends Component {
 
@@ -11,7 +11,9 @@ export class App extends Component {
       displayName: '',
       longitude: '',
       latitude: '',
-      display: false
+      display: false,
+      weather: [],
+      movies: []
     }
   }
 
@@ -22,21 +24,40 @@ export class App extends Component {
   }
   submitData = async (e) => {
     e.preventDefault()
-    axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.aa7e1497cc88fec3b69a5efd60a76506&city=${this.state.displayName}&format=json`).then(axiosResponse =>{
+    axios.get(`https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_API}&city=${this.state.displayName}&format=json`).then(axiosResponse => {
 
       this.setState({
         displayName: axiosResponse.data[0].display_name,
         longitude: axiosResponse.data[0].lon,
         latitude: axiosResponse.data[0].lat,
-        display : true
+        display: true
       })
-    }).catch(e=>{
-      alert("plz enter city name! 404 ERORR");
-  
+    }).then(async () => {
+      let weatherUrl = `http://localhost:8000/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
+      let weatherShow = await axios.get(weatherUrl).then(response => {
+        this.setState({
+          weather: response.data,
+          display: true
+        })
+      })
+      let moviesUrl = `http://localhost:8000/movies?cityname=${this.state.display}`
+      let moviesGet = await axios.get(moviesUrl).then(response => {
+        this.setState({
+          movies: response.data,
+          display: true
+        })
+      })
+
     })
-  
-    
-  
+    //   .catch{
+    //   this.setState({
+    //     display: false
+    //   })
+    //   alert("plz enter city name! 404 ERORR");
+    // }
+
+
+
   }
   render() {
     return (
@@ -46,17 +67,43 @@ export class App extends Component {
           <button>Explore!</button>
         </form>
         < ListGroup>
-          <ListGroup.Item variant="dark" style={{height: '4em'}}>{this.state.displayName}</ListGroup.Item>
-          <ListGroup.Item variant="dark" style={{height: '4em'}}>{this.state.longitude}</ListGroup.Item>
-          <ListGroup.Item variant="dark" style={{height: '4em'}}>{this.state.latitude}</ListGroup.Item>
+          <ListGroup.Item variant="dark" style={{ height: '4em' }}>{this.state.displayName}</ListGroup.Item>
+          <ListGroup.Item variant="dark" style={{ height: '4em' }}>{this.state.longitude}</ListGroup.Item>
+          <ListGroup.Item variant="dark" style={{ height: '4em' }}>{this.state.latitude}</ListGroup.Item>
         </ListGroup>
         {this.state.display &&
-        <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.aa7e1497cc88fec3b69a5efd60a76506&center=${this.state.latitude},${this.state.longitude}&zoom=10`} style={{ width:"400px" , height:"400" }} rounded/>
-         /* <MapContaine  lat={this.state.latitude} lon={this.state.longitude} /> */
+          <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.aa7e1497cc88fec3b69a5efd60a76506&center=${this.state.latitude},${this.state.longitude}&zoom=10`} style={{ width: "400px", height: "400" }} rounded />
+          /* <MapContaine  lat={this.state.latitude} lon={this.state.longitude} /> */
+        }
+
+        {
+          this.state.display &&
+          this.state.weather.map((element, i) => {
+            return (
+              <>
+                <h3> Description: {element.description}</h3>
+                <h3> date : {element.date}</h3>
+              </>
+            )
+
+          })
+        }
+
+        {
+          this.state.display &&
+          this.state.movies.map((element, i) => {
+            return (
+              <>
+                <h4>Title :{element.title}</h4>
+                <h5>Have Votes :{element.votes}</h5>
+                <img src={element.img} />
+              </>
+            )
+          })
         }
       </>
-     
-     
+
+
     )
   }
 }
