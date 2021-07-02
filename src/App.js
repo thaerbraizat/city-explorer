@@ -35,29 +35,30 @@ export class App extends Component {
         display: true
       })
     }).then(async () => {
-      let weatherUrl = `http://localhost:8000/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
-      let weatherShow = await axios.get(weatherUrl).then(response => {
-        this.setState({
-          weather: response.data,
-          display: true
-        })
-      })
-      let moviesUrl = `http://localhost:8000/movies?&originaltitle=${this.state.cityName}`
+      // let weatherUrl = `https://cityexplorer1996.herokuapp.com/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
+      // let weatherShow = await axios.get(weatherUrl).then(response => {
+      //   this.setState({
+      //     weather: response.data,
+      //     display: true
+      //   })
+      // })
+      console.log(this.state.weather);
+      let moviesUrl = `https://cityexplorer1996.herokuapp.com/movies?originaltitle=${this.state.cityName}`
       let moviesGet = await axios.get(moviesUrl).then(response => {
         this.setState({
           movies: response.data,
-
           display: true
         })
       })
 
     })
-    .catch(error => {
-      this.setState({
-        display:false
-      })
-      alert("plz enter city name! 500 ERORR");
-    });
+
+    // .catch(error => {
+    //   this.setState({
+    //     display:false
+    //   })
+    //   alert("plz enter city name! 500 ERORR");
+    // });
     
 
 
