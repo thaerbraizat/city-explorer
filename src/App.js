@@ -53,12 +53,12 @@ export class App extends Component {
 
     })
 
-    // .catch(error => {
-    //   this.setState({
-    //     display:false
-    //   })
-    //   alert("plz enter city name! 500 ERORR");
-    // });
+    .catch(error => {
+      this.setState({
+        display:false
+      })
+      alert("plz enter city name! 500 ERORR");
+    });
     
 
 
