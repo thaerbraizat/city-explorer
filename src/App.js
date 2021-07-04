@@ -35,7 +35,7 @@ export class App extends Component {
         display: true
       })
     }).then(async () => {
-      let weatherUrl = `https://cityexplorer1996.herokuapp.com/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
       let weatherShow = await axios.get(weatherUrl).then(response => {
         this.setState({
           weather: response.data,
@@ -43,7 +43,7 @@ export class App extends Component {
         })
       })
       console.log(this.state.weather);
-      let moviesUrl = `https://cityexplorer1996.herokuapp.com/movies?originaltitle=${this.state.cityName}`
+      let moviesUrl = `${process.env.REACT_APP_SERVER}/movies?originaltitle=${this.state.cityName}`
       let moviesGet = await axios.get(moviesUrl).then(response => {
         this.setState({
           movies: response.data,
