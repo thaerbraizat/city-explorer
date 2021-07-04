@@ -35,13 +35,13 @@ export class App extends Component {
         display: true
       })
     }).then(async () => {
-      // let weatherUrl = `https://cityexplorer1996.herokuapp.com/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
-      // let weatherShow = await axios.get(weatherUrl).then(response => {
-      //   this.setState({
-      //     weather: response.data,
-      //     display: true
-      //   })
-      // })
+      let weatherUrl = `https://cityexplorer1996.herokuapp.com/weather?lat=${this.state.latitude}&lon=${this.state.longitude}`
+      let weatherShow = await axios.get(weatherUrl).then(response => {
+        this.setState({
+          weather: response.data,
+          display: true
+        })
+      })
       console.log(this.state.weather);
       let moviesUrl = `https://cityexplorer1996.herokuapp.com/movies?originaltitle=${this.state.cityName}`
       let moviesGet = await axios.get(moviesUrl).then(response => {
